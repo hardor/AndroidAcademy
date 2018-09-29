@@ -1,3 +1,15 @@
 <resources>
-  <string name="app_name">AndroidAcademy</string>
+  <string name="app_name" translatable="false">AndroidAcademy</string>
+  <string name="full_name">Full Name</string>
+  <string name="avatar" translatable="false">Avatar</string>
+  <string name="enter_a_message">Enter a message…</string>
+  <string name="send_a_message">Send a message</string>
+  <string name="description" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Imperdiet sed euismod nisi porta lorem mollis. Nibh praesent tristique magna sit amet purus gravida quis. </string>
+  <string name="job_title">Job Title</string>
+  <string name="company_name">Company Name</string>
+  <string name="email_not_found">E-mail client not found</string>
+  <string name="linkedin" translatable="false">LinkedIn</string>
+  <string name="vk" translatable="false">VK</string>
+  <string name="browser_not_found">Any browsers were found</string>
+  <string name="email_subject" translatable="false">Email Subject</string>
 </resources>

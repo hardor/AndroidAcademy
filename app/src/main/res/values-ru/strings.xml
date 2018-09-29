@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="enter_a_message">Сообщение…</string>
+  <string name="job_title">Должность</string>
+  <string name="send_a_message">Отправить</string>
+  <string name="email_not_found">Почтовое приложение не найдено</string>
+  <string name="browser_not_found">Браузер не найден</string>
+  <string name="company_name">Компания</string>
+  <string name="full_name" >Имя Фамилия</string>
+</resources>
