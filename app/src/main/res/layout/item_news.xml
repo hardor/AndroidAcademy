@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/card_news"
+  cardCornerRadius="8dp"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/card_margin"
+  >
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/text_margin"
+    android:orientation="horizontal">
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:orientation="vertical">
+      <TextView
+        android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:maxLines="1"
+        android:textAllCaps="true"
+        tools:text="@tools:sample/cities"
+        />
+      <TextView
+        android:id="@+id/title"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:maxLines="2"
+        android:textColor="@android:color/black"
+        tools:text="werwerwer \n retetert"/>
+      <TextView
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:ellipsize="marquee"
+        android:maxLines="3"
+        tools:text="@tools:sample/lorem/random"
+        />
+      <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_gravity="bottom"
+        android:maxLines="1"
+        tools:text="@tools:sample/date/mmddyy"
+        />
+    </LinearLayout>
+
+    <ImageView
+      android:id="@+id/image"
+      android:layout_width="@dimen/image_news_size"
+      android:layout_height="@dimen/image_news_size"
+      android:layout_margin="@dimen/text_margin"
+      android:layout_gravity="center"
+      android:contentDescription="@null"
+      android:scaleType="centerCrop"
+      tools:srcCompat="@tools:sample/avatars"/>
+  </LinearLayout>
+</androidx.cardview.widget.CardView>
