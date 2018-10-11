@@ -7,4 +7,5 @@
   <string name="browser_not_found">Браузер не найден</string>
   <string name="company_name">Компания</string>
   <string name="full_name" >Имя Фамилия</string>
+  <string name="date_string">dd/MM/yyyy</string>
 </resources>

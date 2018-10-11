@@ -12,4 +12,7 @@
   <string name="vk" translatable="false">VK</string>
   <string name="browser_not_found">Any browsers were found</string>
   <string name="email_subject" translatable="false">Email Subject</string>
+  <string name="title_activity_news_list" translatable="false">NewsList</string>
+  <string name="menu_action_switch" translatable="false">Switch</string>
+  <string name="date_string">MM/dd/yyyy</string>
 </resources>

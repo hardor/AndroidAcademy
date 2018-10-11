@@ -1,4 +1,4 @@
-package ru.profapp.androidacademy
+package ru.profapp.androidacademy.Activities
 
 import android.content.Intent
 import android.net.Uri
@@ -8,8 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import ru.profapp.androidacademy.R
 
-class MainActivity : AppCompatActivity() {
+class AboutActivity : AppCompatActivity() {
 
     private lateinit var tvSendMessage: TextView
     private lateinit var message: EditText
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var ivLinkedIn: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_about)
         title = getString(R.string.full_name)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
