@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -16,51 +17,93 @@ import ru.profapp.androidacademy.R
 import java.text.SimpleDateFormat
 import java.util.*
 
+class NewsRecyclerViewAdapter(private val recyclerView: RecyclerView, private val context: Context, private val news: List<NewsItem?>, private val clickListener: OnItemClickListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-class NewsRecyclerViewAdapter(private val context: Context, private val news: List<NewsItem>, private val clickListener: OnItemClickListener?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    enum class ItemType(val flag: Int) {
+        ITEM(0),
+        WITHOUT_IMAGE(1),
+        TITLE(2),
+        LOADING(3);
+    }
+
+    var isLoading: Boolean = false
+    var pastVisibleItems: Int = 0
+    var lastVisibleItem: Int = 0
+    var totalItemCount: Int = 0
+    var onLoadMoreListener: OnLoadMoreListener? = null
+
+    init {
+        val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                if (dy > 0) {
+                    lastVisibleItem = linearLayoutManager.childCount
+                    totalItemCount = linearLayoutManager.itemCount
+                    pastVisibleItems = linearLayoutManager.findFirstVisibleItemPosition()
+
+                    if (!isLoading) {
+                        if (lastVisibleItem + pastVisibleItems >= totalItemCount) {
+
+                            if (onLoadMoreListener != null) {
+                                isLoading = true
+                                onLoadMoreListener!!.onLoadMore()
+                            } else {
+                                isLoading = false
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            VIEW_TYPE_ITEM -> (holder as ItemViewHolder).bind(news[position])
-            VIEW_TYPE_ITEM_WITHOUT_IMAGE -> (holder as WithoutImageViewHolder).bind(news[position])
+            ItemType.ITEM.flag -> (holder as ItemViewHolder).bind(news[position]!!)
+            ItemType.WITHOUT_IMAGE.flag -> (holder as WithoutImageViewHolder).bind(news[position]!!)
+            ItemType.TITLE.flag -> (holder as TitleViewHolder).bind(news[position]!!)
         }
 
     }
-
-
-    private val VIEW_TYPE_ITEM = 0
-    private val VIEW_TYPE_LOADING = 1
-    private val VIEW_TYPE_ITEM_WITHOUT_IMAGE = 2
-
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val imageOption = RequestOptions()
             .placeholder(R.drawable.ic_error_outline_black_24dp)
             .error(R.drawable.ic_error_outline_black_24dp)
             .centerCrop()
-    private val imageLoader: RequestManager = Glide.with(context).applyDefaultRequestOptions(imageOption);
+    private val imageLoader: RequestManager = Glide.with(context).applyDefaultRequestOptions(imageOption)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            VIEW_TYPE_ITEM -> ItemViewHolder(inflater.inflate(R.layout.item_news, parent, false), clickListener)
-            VIEW_TYPE_ITEM_WITHOUT_IMAGE -> WithoutImageViewHolder(inflater.inflate(R.layout.item_news_without_image, parent, false), clickListener)
-            VIEW_TYPE_LOADING -> LoadingViewHolder(inflater.inflate(R.layout.item_loading, parent, false))
+            ItemType.ITEM.flag -> ItemViewHolder(inflater.inflate(R.layout.item_news, parent, false), clickListener)
+            ItemType.WITHOUT_IMAGE.flag -> WithoutImageViewHolder(inflater.inflate(R.layout.item_news_without_image, parent, false), clickListener)
+            ItemType.TITLE.flag -> TitleViewHolder(inflater.inflate(R.layout.item_title, parent, false))
+            ItemType.LOADING.flag -> LoadingViewHolder(inflater.inflate(R.layout.item_loading, parent, false))
             else -> LoadingViewHolder(inflater.inflate(R.layout.item_loading, parent, false))
         }
 
     }
 
     override fun getItemViewType(position: Int): Int {
-        // We can check image on null
-        return position % 3
+        val item = news[position]
+
+        return when {
+            item == null -> ItemType.LOADING.flag
+            item.category.name == "Title" -> ItemType.TITLE.flag
+            item.imageUrl.isNullOrBlank() -> ItemType.WITHOUT_IMAGE.flag
+            else -> ItemType.ITEM.flag
+        }
+
     }
 
     override fun getItemCount(): Int {
         return news.size
     }
 
-
     interface OnItemClickListener {
-        fun onItemClick(item: NewsItem)
+        fun onItemClick(item: NewsItem?)
     }
 
     inner class ItemViewHolder(itemView: View, listener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
@@ -69,7 +112,6 @@ class NewsRecyclerViewAdapter(private val context: Context, private val news: Li
         private val title: TextView = itemView.findViewById(R.id.title)
         private val preview: TextView = itemView.findViewById(R.id.preview)
         private val date: TextView = itemView.findViewById(R.id.date)
-
 
         init {
             itemView.setOnClickListener { view ->
@@ -96,16 +138,24 @@ class NewsRecyclerViewAdapter(private val context: Context, private val news: Li
 
     }
 
-
     //Just for example
-    inner class WithoutImageViewHolder(itemView: View, listener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
 
+    inner class TitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        private val title: TextView = itemView.findViewById(R.id.title)
+
+        fun bind(item: NewsItem) {
+            title.text = item.title
+        }
+
+    }
+
+    inner class WithoutImageViewHolder(itemView: View, listener: OnItemClickListener?) : RecyclerView.ViewHolder(itemView) {
 
         private val category: TextView = itemView.findViewById(R.id.category)
         private val title: TextView = itemView.findViewById(R.id.title)
         private val preview: TextView = itemView.findViewById(R.id.preview)
         private val date: TextView = itemView.findViewById(R.id.date)
-
 
         init {
             itemView.setOnClickListener { view ->

@@ -4,12 +4,12 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-class NewsItem(val title: String, val imageUrl: String, val category: Category, val publishDate: Date, val previewText: String, val fullText: String) : Parcelable {
+class NewsItem(val title: String, val imageUrl: String? = null, val category: Category, val publishDate: Date? = null, val previewText: String? = null, val fullText: String? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
             Category(parcel.readInt(), parcel.readString()),
-            Date(parcel.readLong()),
+            parcel.readString()?.toLong()?.let { Date(it) },
             parcel.readString(),
             parcel.readString()) {
     }
@@ -23,7 +23,7 @@ class NewsItem(val title: String, val imageUrl: String, val category: Category, 
         parcel.writeString(category.name)
 
 
-        parcel.writeLong(publishDate.time)
+        parcel.writeString(publishDate?.time.toString())
         parcel.writeString(previewText)
         parcel.writeString(fullText)
     }
