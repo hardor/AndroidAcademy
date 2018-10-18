@@ -1,20 +1,18 @@
 package ru.profapp.androidacademy.Utils
 
-import java.util.ArrayList
-import java.util.Date
-import java.util.GregorianCalendar
 import ru.profapp.androidacademy.Models.Category
 import ru.profapp.androidacademy.Models.NewsItem
+import java.util.*
 
 object DataUtils {
 
-    fun generateNews(): List<NewsItem> {
+    fun generateNews(): List<NewsItem?> {
         val darwinAwards = Category(1, "Darwin Awards")
         val criminal = Category(2, "Criminal")
         val animals = Category(3, "Animals")
         val music = Category(4, "Music")
 
-        val news = ArrayList<NewsItem>()
+        val news = ArrayList<NewsItem?>()
         news.add(NewsItem(
                 "Tourist filmed sitting on 5m-long crocodile",
                 "https://e3.365dm.com/18/09/736x414/skynews-crocodile-australia_4433218.jpg",
@@ -126,8 +124,24 @@ object DataUtils {
                         + "\"When I first started gigging around the pubs and clubs up North, two songs that were always in my set "
                         + "were Goodnight Girl and Love Is All Around.\""
         ))
-
-        news.addAll(news)
+        news.add(NewsItem(
+                "Test item without image",
+                null,
+                music,
+                createDate(2018, 9, 17, 12, 45),
+                "The Voice 2016 winner says he was \"really taken aback\" by the opportunity after singing the band's songs " + "early in his career.",
+                "The Scottish band, who are best-known for their 1994 cover of The Troggs' 1960s hit Love Is All Around, "
+                        + "revealed the change in line-up on Tuesday.\n\n"
+                        + "Simm, 38, who won The Voice in 2016, will take over singing duties after founding member Marti Pellow "
+                        + "left the band last year.\n\n"
+                        + "Simm, from Lancashire, first shot to fame on ITV talent show Popstars in 2001 after forming the group "
+                        + "Liberty X with four other runner-up contestants.\n\n"
+                        + "He has recalled singing Wet Wet Wet's songs early in his career.He said: \"I was really taken aback, the"
+                        + " opportunity to join a band with such amazing songs and great guys and a great fanbase really "
+                        + "excites me.\n\n"
+                        + "\"When I first started gigging around the pubs and clubs up North, two songs that were always in my set "
+                        + "were Goodnight Girl and Love Is All Around.\""
+        ))
         return news
     }
 
