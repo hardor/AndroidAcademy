@@ -14,6 +14,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import ru.profapp.androidacademy.Models.NewsItem
 import ru.profapp.androidacademy.R
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -91,7 +92,7 @@ class NewsRecyclerViewAdapter(private val recyclerView: RecyclerView, private va
 
         return when {
             item == null -> ItemType.LOADING.flag
-            item.category.name == "Title" -> ItemType.TITLE.flag
+            item.category == "Title" -> ItemType.TITLE.flag
             item.imageUrl.isNullOrBlank() -> ItemType.WITHOUT_IMAGE.flag
             else -> ItemType.ITEM.flag
         }
@@ -126,9 +127,13 @@ class NewsRecyclerViewAdapter(private val recyclerView: RecyclerView, private va
         fun bind(item: NewsItem) {
             imageLoader.load(item.imageUrl).into(imageView)
             title.text = item.title
-            preview.text = item.previewText
-            category.text = item.category.name
-            date.text = SimpleDateFormat(context.getString(R.string.date_string), Locale.getDefault()).format(item.publishDate)
+            preview.text = item.fullText
+            if (item.category.isNullOrBlank())
+                category.visibility = View.GONE
+            else
+                category.text = item.category
+            date.text =  DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault()).format(item.publishDate)
+
         }
     }
 
@@ -169,8 +174,8 @@ class NewsRecyclerViewAdapter(private val recyclerView: RecyclerView, private va
 
         fun bind(item: NewsItem) {
             title.text = item.title
-            preview.text = item.previewText
-            category.text = item.category.name
+            preview.text = item.fullText
+            category.text = item.category
             date.text = SimpleDateFormat(context.getString(R.string.date_string), Locale.getDefault()).format(item.publishDate)
         }
 

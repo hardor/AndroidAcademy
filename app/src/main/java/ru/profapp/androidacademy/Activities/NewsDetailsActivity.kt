@@ -12,6 +12,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import ru.profapp.androidacademy.Models.NewsItem
 import ru.profapp.androidacademy.R
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +32,7 @@ class NewsDetailsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val news = intent.getParcelableExtra<NewsItem>("item_news")
-        this.title = news.category.name
+        this.title = news.category
 
         val imageView: ImageView = findViewById(R.id.news_image)
         val title: TextView = findViewById(R.id.title)
@@ -40,7 +41,7 @@ class NewsDetailsActivity : AppCompatActivity() {
 
         title.text= news.title
         content.text=news.fullText
-        date.text = SimpleDateFormat(getString(R.string.date_string), Locale.getDefault()).format(news.publishDate)
+        date.text =  DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault()).format(news.publishDate)
         imageLoader = Glide.with(this).applyDefaultRequestOptions(imageOption)
         imageLoader.load(news.imageUrl).into(imageView)
 

@@ -4,11 +4,27 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-class NewsItem(val title: String, val imageUrl: String? = null, val category: Category, val publishDate: Date? = null, val previewText: String? = null, val fullText: String? = null) : Parcelable {
+class NewsItem : Parcelable {
+    val title: String?
+    val imageUrl: String?
+    val category: String?
+    val publishDate: Date?
+    val fullText: String?
+    val url: String?
+
+    constructor(title: String? = null, imageUrl: String? = null, category: String? = null, publishDate: Date? = null, fullText: String? = null, url: String? = null) {
+        this.title = title
+        this.imageUrl = imageUrl
+        this.category = category
+        this.publishDate = publishDate
+        this.fullText = fullText
+        this.url = url
+    }
+
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),
-            Category(parcel.readInt(), parcel.readString()),
+            parcel.readString(),
             parcel.readString()?.toLong()?.let { Date(it) },
             parcel.readString(),
             parcel.readString()) {
@@ -17,15 +33,10 @@ class NewsItem(val title: String, val imageUrl: String? = null, val category: Ca
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeString(imageUrl)
-
-        //Is it good method to write Category ?
-        parcel.writeInt(category.id)
-        parcel.writeString(category.name)
-
-
+        parcel.writeString(category)
         parcel.writeString(publishDate?.time.toString())
-        parcel.writeString(previewText)
         parcel.writeString(fullText)
+        parcel.writeString(url)
     }
 
     override fun describeContents(): Int {
