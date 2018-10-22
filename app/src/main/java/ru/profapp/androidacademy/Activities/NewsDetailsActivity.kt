@@ -1,51 +1,32 @@
 package ru.profapp.androidacademy.Activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.TextView
+import android.webkit.WebView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
 import ru.profapp.androidacademy.Models.NewsItem
 import ru.profapp.androidacademy.R
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NewsDetailsActivity : AppCompatActivity() {
-    private val imageOption = RequestOptions()
-            .placeholder(R.drawable.ic_error_outline_black_24dp)
-            .error(R.drawable.ic_error_outline_black_24dp)
-            .centerCrop()
-    private lateinit var imageLoader: RequestManager
+
+    lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news_details)
 
-        val toolbar = findViewById<Toolbar>(R.id.main_toolbar)
-        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         val news = intent.getParcelableExtra<NewsItem>("item_news")
-        this.title = news.category
+        title = news.category
 
-        val imageView: ImageView = findViewById(R.id.news_image)
-        val title: TextView = findViewById(R.id.title)
-        val content: TextView = findViewById(R.id.content)
-        val date: TextView = findViewById(R.id.date)
+        webView = findViewById(R.id.wbV_news)
 
-        title.text= news.title
-        content.text=news.fullText
-        date.text =  DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.SHORT, Locale.getDefault()).format(news.publishDate)
-        imageLoader = Glide.with(this).applyDefaultRequestOptions(imageOption)
-        imageLoader.load(news.imageUrl).into(imageView)
+        webView.settings.builtInZoomControls = false
+        webView.settings.displayZoomControls = false
+        webView.loadUrl(news.url)
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()

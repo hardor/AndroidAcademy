@@ -12,37 +12,13 @@
   <string name="vk" translatable="false">VK</string>
   <string name="browser_not_found">Any browsers were found</string>
   <string name="email_subject" translatable="false">Email Subject</string>
-  <string name="title_activity_news_list" translatable="false">NewsList</string>
+  <string name="title_activity_news_list" translatable="false">NY Times</string>
   <string name="menu_action_switch" translatable="false">Switch</string>
   <string name="date_string">MM/dd/yyyy</string>
   <string name="spinner_article">NY article</string>
-  <string-array name="planets_array">
-    <item>home</item>
-    <item>opinion</item>
-    <item>world</item>
-    <item>national</item>
-    <item>politics</item>
-    <item>upshot</item>
-    <item>nyregion</item>
-    <item>business</item>
-    <item>technology</item>
-    <item>science</item>
-    <item>health</item>
-    <item>sports</item>
-    <item>arts</item>
-    <item>books</item>
-    <item>movies</item>
-    <item>theater</item>
-    <item>sundayreview</item>
-    <item>fashion</item>
-    <item>tmagazine</item>
-    <item>food</item>
-    <item>travel</item>
-    <item>magazine</item>
-    <item>realestate</item>
-    <item> automobiles</item>
-    <item>obituaries</item>
-    <item> insider</item>
-  </string-array>
+  <string name="error_network">Network error. Please check your network connection and try again</string>
+  <string name="error_server">Server error. Probably sample token is done</string>
+  <string name="error_data_is_empty">There is no data for your request</string>
+  <string name="btn_try_again">Try again</string>
 
 </resources>
